@@ -279,6 +279,22 @@ body{padding:var(--rahmen)}
 .tierbild button{position:absolute;top:-14px;right:-14px;width:40px;height:40px;border-radius:50%;border:0;background:#f0a35e;color:#30464a;font-size:24px;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.3)}
 @media (max-width:640px){.kachel{height:92px}.tierband{padding:20px 0 16px}.tierbild button{top:6px;right:6px}}
 @media (prefers-reduced-motion:reduce){.tierband{overflow-x:auto}.tierband .spur{animation:none}.tierband .doppel{display:none}.kachel{transition:none}}
+/* Hochband neben dem Quiz: läuft langsam von oben nach unten */
+.quiz-raster{max-width:1240px;margin:0 auto}
+.hochband{display:none}
+@media (min-width:1000px){
+  .quiz-raster{display:grid;grid-template-columns:minmax(0,760px) 190px;gap:44px;justify-content:center;align-items:start;padding-right:16px}
+  .quiz-raster>.schmal{margin:0;width:100%}
+  .hochband{display:block;position:sticky;top:16px;height:calc(100vh - 32px);max-height:900px;overflow:hidden;border-radius:14px;-webkit-mask-image:linear-gradient(transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(transparent,#000 8%,#000 92%,transparent)}
+  .hochband-titel{position:absolute;z-index:3;top:22px;left:0;right:0;text-align:center;font-family:var(--hand);font-weight:700;font-size:24px;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.55);pointer-events:none}
+  .hspur{display:flex;flex-direction:column;gap:10px;animation:hochlauf 60s linear infinite}
+  .hochband:hover .hspur,.hochband:focus-within .hspur{animation-play-state:paused}
+  .hochband .kachel{height:auto;width:100%;cursor:zoom-in}
+  .hochband .kachel img,.hochband .kachel video{width:100%;height:auto;aspect-ratio:auto}
+  .hochband .kachel:hover,.hochband .kachel:focus-visible{transform:scale(1.04)}
+}
+@keyframes hochlauf{from{transform:translateY(-50%)}to{transform:translateY(0)}}
+@media (prefers-reduced-motion:reduce){.hspur{animation:none}.hochband{overflow-y:auto}.hochband .doppel{display:none}}
 </style>
 
 <div class="band">
@@ -382,7 +398,7 @@ body{padding:var(--rahmen)}
   </section>
 
   <section class="teil quiz-teil" id="quiz-start">
-    <div class="schmal">
+    <div class="quiz-raster"><div class="schmal">
       <div class="teil-kopf auf"><span class="kapitel">Teil 2</span><h2>Gefragt &amp; gefressen</h2><span class="hand">das kleine Tier-Quiz</span></div>
       <p class="lead auf">Fragen, die rund ums Füttern immer wieder auftauchen. Tipp auf Ja oder Nein, lies meine Antwort und sammle deine Tiere.</p>
       <p class="hinweis auf" style="margin-top:16px">Ich bin keine Tierärztin. Was hier steht, sind meine eigenen Erfahrungen aus einem Leben auf dem Hof mit Hunden, Katzen und Pferden – mit viel Liebe und ganz offen erzählt. Das ersetzt keinen Rat von Tierärztin oder Tierarzt. Wenn es deinem Tier nicht gut geht: bitte immer zuerst dorthin.</p>
@@ -398,6 +414,28 @@ body{padding:var(--rahmen)}
         <p class="cta">Lust auf mehr Tiergeschichten? <b>Jeden 1. Mittwoch im Monat, 17:17 Uhr, 30 Minuten online.</b> Anmeldung bis 17 Uhr am selben Tag per WhatsApp: <b>0171 6567794</b>.</p>
         <button class="neu" id="neu" type="button">Noch mal von vorn</button>
       </section>
+    </div>
+    <aside class="hochband" aria-label="Kurz vom Hof: Videos und Fotos">
+      <div class="hochband-titel">Live vom Hof</div>
+      <div class="hspur">
+        <button type="button" class="kachel" data-gross="slider/clip-streicheln-gross.mp4" data-video="1" aria-label="Video: Streicheleinheit für den Schimmel"><video src="slider/clip-streicheln.mp4" poster="slider/clip-streicheln.jpg" width="168" height="300" muted loop playsinline autoplay preload="metadata"></video></button>
+        <button type="button" class="kachel" data-gross="slider/eclair-bach-gross.webp" aria-label="Foto: Diana mit Eclair im Bach"><img src="slider/eclair-bach.webp" alt="" loading="lazy" decoding="async"></button>
+        <button type="button" class="kachel" data-gross="slider/clip-katze-gross.mp4" data-video="1" aria-label="Video: Die schwarze Katze döst"><video src="slider/clip-katze.mp4" poster="slider/clip-katze.jpg" width="168" height="300" muted loop playsinline autoplay preload="metadata"></video></button>
+        <button type="button" class="kachel" data-gross="slider/drei-pferde-gross.webp" aria-label="Foto: Drei Pferde grasen auf der Weide"><img src="slider/drei-pferde.webp" alt="" loading="lazy" decoding="async"></button>
+        <button type="button" class="kachel" data-gross="slider/clip-pferd-zaun-gross.mp4" data-video="1" aria-label="Video: Schimmel schaut über den Zaun"><video src="slider/clip-pferd-zaun.mp4" poster="slider/clip-pferd-zaun.jpg" width="168" height="300" muted loop playsinline autoplay preload="metadata"></video></button>
+        <button type="button" class="kachel" data-gross="slider/hund-diana-gross.webp" aria-label="Foto: Diana mit Hund"><img src="slider/hund-diana.webp" alt="" loading="lazy" decoding="async"></button>
+        <button type="button" class="kachel" data-gross="slider/clip-schecke-gross.mp4" data-video="1" aria-label="Video: Schecke und Schimmel im Hof"><video src="slider/clip-schecke.mp4" poster="slider/clip-schecke.jpg" width="168" height="300" muted loop playsinline autoplay preload="metadata"></video></button>
+        <button type="button" class="kachel" data-gross="slider/katze-sessel-gross.webp" aria-label="Foto: Katze im Korbsessel"><img src="slider/katze-sessel.webp" alt="" loading="lazy" decoding="async"></button>
+        <button type="button" class="kachel doppel" data-gross="slider/clip-streicheln-gross.mp4" data-video="1" aria-label="Video: Streicheleinheit für den Schimmel" aria-hidden="true" tabindex="-1"><video src="slider/clip-streicheln.mp4" poster="slider/clip-streicheln.jpg" width="168" height="300" muted loop playsinline autoplay preload="metadata"></video></button>
+        <button type="button" class="kachel doppel" data-gross="slider/eclair-bach-gross.webp" aria-label="Foto: Diana mit Eclair im Bach" aria-hidden="true" tabindex="-1"><img src="slider/eclair-bach.webp" alt="" loading="lazy" decoding="async"></button>
+        <button type="button" class="kachel doppel" data-gross="slider/clip-katze-gross.mp4" data-video="1" aria-label="Video: Die schwarze Katze döst" aria-hidden="true" tabindex="-1"><video src="slider/clip-katze.mp4" poster="slider/clip-katze.jpg" width="168" height="300" muted loop playsinline autoplay preload="metadata"></video></button>
+        <button type="button" class="kachel doppel" data-gross="slider/drei-pferde-gross.webp" aria-label="Foto: Drei Pferde grasen auf der Weide" aria-hidden="true" tabindex="-1"><img src="slider/drei-pferde.webp" alt="" loading="lazy" decoding="async"></button>
+        <button type="button" class="kachel doppel" data-gross="slider/clip-pferd-zaun-gross.mp4" data-video="1" aria-label="Video: Schimmel schaut über den Zaun" aria-hidden="true" tabindex="-1"><video src="slider/clip-pferd-zaun.mp4" poster="slider/clip-pferd-zaun.jpg" width="168" height="300" muted loop playsinline autoplay preload="metadata"></video></button>
+        <button type="button" class="kachel doppel" data-gross="slider/hund-diana-gross.webp" aria-label="Foto: Diana mit Hund" aria-hidden="true" tabindex="-1"><img src="slider/hund-diana.webp" alt="" loading="lazy" decoding="async"></button>
+        <button type="button" class="kachel doppel" data-gross="slider/clip-schecke-gross.mp4" data-video="1" aria-label="Video: Schecke und Schimmel im Hof" aria-hidden="true" tabindex="-1"><video src="slider/clip-schecke.mp4" poster="slider/clip-schecke.jpg" width="168" height="300" muted loop playsinline autoplay preload="metadata"></video></button>
+        <button type="button" class="kachel doppel" data-gross="slider/katze-sessel-gross.webp" aria-label="Foto: Katze im Korbsessel" aria-hidden="true" tabindex="-1"><img src="slider/katze-sessel.webp" alt="" loading="lazy" decoding="async"></button>
+      </div>
+    </aside>
     </div>
   </section>
 
@@ -485,9 +523,9 @@ body{padding:var(--rahmen)}
   var d=document.getElementById("tierbild"),inh=document.getElementById("tierbild-inhalt");
   if(!d||!d.showModal)return;
   var ruhig=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if(ruhig)document.querySelectorAll(".tierband video").forEach(function(v){v.removeAttribute("autoplay");v.pause();});
+  if(ruhig)document.querySelectorAll(".tierband video,.hochband video").forEach(function(v){v.removeAttribute("autoplay");v.pause();});
   function zu(){inh.innerHTML="";d.close();}
-  document.querySelectorAll(".tierband .kachel").forEach(function(k){
+  document.querySelectorAll(".tierband .kachel,.hochband .kachel").forEach(function(k){
     k.addEventListener("click",function(){
       var src=k.getAttribute("data-gross"),el;
       if(k.hasAttribute("data-video")){el=document.createElement("video");el.muted=true;el.loop=true;el.autoplay=true;el.controls=true;el.setAttribute("playsinline","");}
