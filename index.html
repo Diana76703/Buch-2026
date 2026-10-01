@@ -1,0 +1,537 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Artgerechtes Futter &amp; Urlaub mit Tieren</title>
+<meta name="description" content="Ein kleines Geschenk vom Jägerhof in Kraichtal: das Büchlein „Artgerechtes Futter &amp; Urlaub mit Tieren“ zum Durchblättern, dazu das Tier-Quiz „Gefragt &amp; gefressen“.">
+<style>
+@font-face{font-family:"Titillium Web";font-weight:400;font-display:swap;src:url(schriften/TitilliumWeb-Regular.ttf) format("truetype")}
+@font-face{font-family:"Titillium Web";font-weight:600;font-display:swap;src:url(schriften/TitilliumWeb-SemiBold.ttf) format("truetype")}
+@font-face{font-family:"Titillium Web";font-weight:700 900;font-display:swap;src:url(schriften/TitilliumWeb-Bold.ttf) format("truetype")}
+@font-face{font-family:"Caveat";font-weight:400 700;font-display:swap;src:url(schriften/Caveat.ttf) format("truetype")}
+</style>
+<link rel="preload" as="image" href="seiten/s01.webp">
+<style>
+
+/* Quiz im Stil des Büchleins: Petrol-Kopfkästen je Rubrik, dünne Linien-Icons in Glut, Antworten als Sand-Kasten */
+:root{
+  --bg:#fbf8f3; --card:#ffffff; --ink:#22302f; --mute:#566a6e; --line:#e2ddd5;
+  --petrol:#30464a; --blau:#4a6c77; --glut:#b8672e; --glut-hell:#f0b27f; --sand:#f7efe6; --glut-soft:#f7efe6;
+  --kopf:#30464a; --kopf-text:#ffffff; --kopf-mute:#b9cbce;
+  --ok:#4f7d32; --nein:#a4432f;
+  --hand:"Caveat",cursive; --sans:"Titillium Web",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141c1d; --card:#1c2729; --ink:#e6eeee; --mute:#9fb3b6; --line:#2e3d40;
+  --petrol:#8fc0c8; --blau:#7fa6b1; --glut:#e39a62; --glut-hell:#f0b27f; --sand:#2a2520; --glut-soft:#2e241c;
+  --kopf:#22393d; --kopf-text:#ffffff; --kopf-mute:#9fb3b6;
+  --ok:#8cc46a; --nein:#ec8a74; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141c1d; --card:#1c2729; --ink:#e6eeee; --mute:#9fb3b6; --line:#2e3d40;
+  --petrol:#8fc0c8; --blau:#7fa6b1; --glut:#e39a62; --glut-hell:#f0b27f; --sand:#2a2520; --glut-soft:#2e241c;
+  --kopf:#22393d; --kopf-text:#ffffff; --kopf-mute:#9fb3b6;
+  --ok:#8cc46a; --nein:#ec8a74; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.55;padding:0 16px 56px}
+.wrap{max-width:760px;margin:0 auto}
+header{padding-block:36px 8px}
+.marke{font-family:var(--hand);font-weight:700;font-size:26px;color:var(--glut);line-height:1}
+.kapitel{font-size:12px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--blau)}
+h1{font-size:clamp(34px,7vw,52px);line-height:1.04;font-weight:700;color:var(--petrol);margin:6px 0 12px;letter-spacing:-.01em;text-wrap:balance}
+.lead{color:var(--mute);max-width:60ch;margin:0}
+.hinweis{margin-top:18px;font-size:15px;color:var(--mute);background:var(--sand);border-left:5px solid var(--glut);border-radius:0 10px 10px 0;padding:12px 16px}
+
+/* Linien-Icons wie im Buch */
+svg.li{width:28px;height:28px;flex:none;fill:none;stroke:var(--glut);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+
+/* Inhaltsverzeichnis statt Knopfleiste */
+nav.rubriken{margin:28px 0 8px;border-top:1px solid var(--line)}
+nav.rubriken a{display:flex;align-items:center;gap:14px;padding:12px 4px;border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink);transition:background .2s,padding .2s}
+nav.rubriken a:hover{background:var(--card);padding-left:10px}
+nav.rubriken a:focus-visible{outline:2px solid var(--glut);outline-offset:2px}
+nav.rubriken .nr{font-weight:700;color:var(--glut);font-variant-numeric:tabular-nums;width:24px}
+nav.rubriken .name{font-weight:700;color:var(--petrol);flex:1}
+nav.rubriken .zahl{font-size:14px;color:var(--mute);font-variant-numeric:tabular-nums}
+
+/* Rubrik: Kopfkasten wie die Kapitel im Buch */
+section.rubrik{margin-top:48px;scroll-margin-top:72px}
+.rubrik-kopf{position:relative;background:var(--kopf);color:var(--kopf-text);border-radius:14px;padding:22px 84px 20px 24px;margin-bottom:6px;overflow:hidden}
+.rubrik-kopf .kap{font-size:11px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--kopf-mute)}
+.rubrik-kopf h2{margin:4px 0 0;font-size:clamp(24px,4.5vw,30px);line-height:1.1;font-weight:700;color:var(--kopf-text)}
+.rubrik-kopf p{margin:4px 0 0;font-family:var(--hand);font-weight:700;font-size:22px;line-height:1.1;color:var(--glut-hell)}
+.rubrik-kopf svg.li{position:absolute;right:20px;top:20px;width:48px;height:48px;stroke:var(--glut-hell);opacity:.9}
+
+/* Frage: ruhige Karte, zwei schlichte Antworten */
+.frage{padding:20px 2px 22px;border-bottom:1px solid var(--line)}
+.frage h3{margin:0 0 14px;font-size:19px;line-height:1.35;font-weight:600;color:var(--ink);text-wrap:balance;display:flex;gap:12px}
+.frage h3 .fnr{flex:none;font-family:var(--hand);font-weight:700;font-size:24px;line-height:1;color:var(--glut);min-width:22px;padding-top:1px}
+.knoepfe{display:flex;gap:10px;padding-left:34px}
+.knoepfe button{font:inherit;font-weight:600;font-size:15px;letter-spacing:.06em;min-width:92px;padding:7px 20px;border-radius:999px;border:1px solid var(--petrol);background:transparent;color:var(--petrol);cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.knoepfe button:hover:not(:disabled){background:var(--petrol);color:var(--bg)}
+.knoepfe button:focus-visible{outline:2px solid var(--glut);outline-offset:3px}
+.knoepfe button:disabled{cursor:default;opacity:.45}
+.knoepfe button.gewaehlt{opacity:1;background:var(--petrol);color:var(--bg)}
+.knoepfe button.gewaehlt.falsch{background:transparent;color:var(--nein);border-color:var(--nein);text-decoration:line-through}
+.knoepfe button.loesung:not(.gewaehlt){opacity:1;border-color:var(--ok);color:var(--ok)}
+.antwort{margin:16px 0 0 34px;background:var(--sand);border-left:5px solid var(--glut);border-radius:0 10px 10px 0;padding:12px 16px}
+.urteil{font-family:var(--hand);font-weight:700;font-size:23px;line-height:1.05;margin-bottom:4px}
+.urteil.richtig{color:var(--ok)} .urteil.falsch{color:var(--glut)}
+.antwort p{margin:0;max-width:62ch}
+
+/* Sammelalbum im Stil des Kontaktkastens */
+.ergebnis{margin-top:56px;background:var(--kopf);color:var(--kopf-text);border-radius:16px;padding:28px 24px}
+.ergebnis .kap{font-size:11px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--kopf-mute)}
+.ergebnis h2{margin:4px 0 0;font-size:30px;line-height:1.1;font-weight:700}
+.ergebnis .hand{font-family:var(--hand);font-weight:700;font-size:25px;color:var(--glut-hell);margin:4px 0 16px;line-height:1.1}
+.album{display:grid;gap:0;border-top:1px solid rgba(255,255,255,.14)}
+.zeile{display:grid;grid-template-columns:130px 1fr auto;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.14)}
+.zeile .name{font-weight:600}
+.zeile .reihe{display:flex;gap:8px;flex-wrap:wrap;min-width:0}
+.zeile .reihe svg.li{width:24px;height:24px;stroke:var(--glut-hell);opacity:.28;transition:opacity .4s}
+.zeile .reihe svg.li.an{opacity:1}
+.zeile .stand{font-variant-numeric:tabular-nums;color:var(--kopf-mute);font-size:15px;white-space:nowrap}
+.cta{margin-top:20px;font-size:16px;color:#e3ecec}
+.cta b{color:#fff}
+.neu{margin-top:14px;font:inherit;font-weight:600;font-size:15px;letter-spacing:.06em;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.55);border-radius:999px;padding:7px 20px;cursor:pointer;transition:background .2s}
+.neu:hover{background:rgba(255,255,255,.1)}
+.neu:focus-visible{outline:2px solid var(--glut-hell);outline-offset:3px}
+@media (max-width:520px){
+  .zeile{grid-template-columns:1fr auto}.zeile .reihe{grid-column:1/-1;order:3}
+  .knoepfe{padding-left:0;margin-left:0}.antwort{margin-left:0}
+  .rubrik-kopf{padding-right:72px}.rubrik-kopf svg.li{width:40px;height:40px}
+}
+
+footer{margin-top:36px;font-size:14px;color:var(--mute)}
+footer a{color:var(--blau)}
+@media (prefers-reduced-motion:no-preference){
+  .antwort{animation:auf .35s ease-out}
+  @keyframes auf{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+}
+
+
+/* Seite: volle Breite, drei klar getrennte Teile – Buch, Quiz, Fotos vom Hof */
+body{padding:0}
+.innen{max-width:1240px;margin:0 auto;padding:0 16px}
+.schmal{max-width:760px;margin:0 auto;padding:0 16px}
+
+/* Kopfband im Stil des Buchtitels */
+.band{background:var(--kopf);color:var(--kopf-text);position:relative;overflow:hidden}
+.band .innen{padding-block:22px 40px}
+.band-nav{display:flex;align-items:center;gap:22px;flex-wrap:wrap;font-size:14px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+.band-nav .marke{color:var(--glut-hell);font-size:25px;text-transform:none;letter-spacing:0;margin-right:auto}
+.band-nav a{color:#dfe9ea;text-decoration:none;border-bottom:1px solid transparent;padding-bottom:2px;transition:border-color .2s,color .2s}
+.band-nav a:hover{color:#fff;border-color:var(--glut-hell)}
+.band h1{color:#fff;margin:34px 0 6px;font-size:clamp(34px,6vw,58px);max-width:18ch}
+.band .hand{font-family:var(--hand);font-weight:700;color:var(--glut-hell);font-size:clamp(24px,3.4vw,32px);line-height:1.1;margin:0 0 14px}
+.band .lead{color:#d3e0e2;max-width:58ch}
+.band svg.deko{position:absolute;right:-30px;bottom:-40px;width:260px;height:260px;stroke:rgba(240,178,127,.16);stroke-width:1;fill:none;pointer-events:none}
+@media (max-width:640px){.band-nav{gap:14px;font-size:12.5px}.band-nav .marke{width:100%;margin-bottom:2px}.band h1{margin-top:22px}.band svg.deko{width:170px;height:170px}}
+
+/* Teil-Überschriften */
+.teil{padding-top:56px;scroll-margin-top:8px}
+.teil-kopf{display:flex;align-items:baseline;gap:14px;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:22px}
+.teil-kopf .kapitel{flex:none}
+.teil-kopf h2{margin:0;font-size:clamp(26px,4.2vw,36px);line-height:1.1;color:var(--petrol);font-weight:700}
+.teil-kopf .hand{margin-left:auto;font-family:var(--hand);font-weight:700;color:var(--glut);font-size:24px;line-height:1;white-space:nowrap}
+@media (max-width:640px){.teil-kopf{flex-wrap:wrap;gap:4px 12px}.teil-kopf h2{width:100%;order:2}.teil-kopf .hand{margin-left:0;order:3}}
+
+/* Das Buch: so groß, wie der Bildschirm es zulässt */
+.buehne{background:var(--sand);border-radius:18px;padding:clamp(14px,3vw,36px) clamp(8px,3vw,36px) 18px}
+#flip{margin:0 auto;width:100%;max-width:min(1160px,calc((100vh - 170px) * 840 / 595))}
+@supports (height:100svh){#flip{max-width:min(1160px,calc((100svh - 170px) * 840 / 595))}}
+#flip{transition:transform .6s ease}
+#flip.vorn{transform:translateX(-25%)}#flip.hinten{transform:translateX(25%)}
+#flip .blatt{background:#fff;overflow:hidden}
+#flip .blatt img{width:100%;height:100%;object-fit:contain;display:block;user-select:none;-webkit-user-drag:none}
+.stPageFlip{filter:drop-shadow(0 12px 20px rgba(20,40,44,.22))}
+.leiste{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:18px}
+.rund{width:44px;height:44px;border-radius:50%;border:1px solid var(--petrol);background:transparent;color:var(--petrol);display:grid;place-items:center;cursor:pointer;transition:background .2s,color .2s}
+.rund:hover:not(:disabled){background:var(--petrol);color:var(--bg)}
+.rund:disabled{opacity:.3;cursor:default}
+.rund svg{width:20px;height:20px}
+.seitenzahl{min-width:150px;text-align:center;font-variant-numeric:tabular-nums;color:var(--mute);font-size:15px}
+.textknopf{font:inherit;font-size:15px;font-weight:600;background:none;border:0;padding:6px 2px;color:var(--petrol);cursor:pointer;display:inline-flex;align-items:center;gap:6px;border-bottom:1px solid var(--line);transition:border-color .2s;text-decoration:none}
+.textknopf:hover{border-color:var(--glut)}
+.textknopf svg{width:17px;height:17px;flex:none}
+.leiste .trenn{width:1px;height:22px;background:var(--line)}
+.ton[aria-pressed="false"]{color:var(--mute)}
+.rund:focus-visible,.textknopf:focus-visible,.lupe button:focus-visible,.band-nav a:focus-visible{outline:2px solid var(--glut);outline-offset:3px}
+.danach{display:flex;gap:18px 26px;flex-wrap:wrap;justify-content:center;align-items:center;margin-top:18px}
+.tipp{text-align:center;color:var(--mute);font-size:14px;margin:10px 0 0}
+@media (max-width:640px){.leiste{gap:10px}.leiste .trenn{display:none}.seitenzahl{min-width:110px}.leiste .klein{width:100%;display:flex;justify-content:center;gap:24px}}
+@media (min-width:641px){.leiste .klein{display:contents}}
+
+.lupe{position:fixed;inset:0;z-index:50;background:rgba(12,18,19,.94);display:flex;flex-direction:column}
+.lupe[hidden],[hidden]{display:none}
+.lupe-kopf{display:flex;align-items:center;gap:8px;padding:10px 16px;color:#e6eeee;flex:none}
+.lupe-kopf .nr{flex:1;font-variant-numeric:tabular-nums;font-size:15px}
+.lupe button{font:inherit;font-weight:600;font-size:15px;display:inline-flex;align-items:center;gap:6px;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:6px 14px;cursor:pointer}
+.lupe svg{width:18px;height:18px}
+.lupe-flaeche{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;touch-action:pan-x pan-y pinch-zoom;display:grid;place-items:start center;padding:0 16px 16px}
+.lupe-flaeche img{display:block;max-width:none;box-shadow:0 10px 30px rgba(0,0,0,.5);background:#fff}
+
+/* Quiz im Seitenrahmen */
+.quiz-teil .hinweis{margin-top:0}
+.quiz-teil section.rubrik:first-of-type{margin-top:36px}
+
+/* Vom Hof – Fotos */
+.hof{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin:0}
+.hof figure{margin:0;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--card)}
+.hof img{display:block;width:100%;height:auto;aspect-ratio:3/4;object-fit:cover}
+.hof figcaption{padding:8px 12px 10px;font-size:15px;color:var(--mute)}
+@media (max-width:900px){.hof{grid-template-columns:repeat(2,1fr)}.hof figure:first-child{grid-column:1/-1}.hof figure:first-child img{aspect-ratio:4/3}}
+
+.fuss{margin-top:64px;border-top:1px solid var(--line)}
+
+/* ruhiges Einblenden beim Scrollen, nur wenn gewünscht */
+@media (prefers-reduced-motion:no-preference){
+  .js .auf{opacity:0;transform:translateY(18px);transition:opacity .7s ease-out,transform .7s ease-out}
+  .js .auf.da{opacity:1;transform:none}
+  html{scroll-behavior:smooth}
+}
+</style>
+
+<div class="band">
+  <svg class="deko" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 27S4 20 4 12a6 6 0 0 1 12-2 6 6 0 0 1 12 2c0 8-12 15-12 15z"/></svg>
+  <div class="innen">
+    <nav class="band-nav" aria-label="Bereiche">
+      <span class="marke">Futter, Feuer &amp; Viecher</span>
+      <a href="#buch">Das Buch</a>
+      <a href="#quiz-start">Das Quiz</a>
+      <a href="#hof">Vom Hof</a>
+    </nav>
+    <h1>Ein kleines Geschenk für dich</h1>
+    <p class="hand">Artgerechtes Futter &amp; Urlaub mit Tieren – Tiere tun uns gut.</p>
+    <p class="lead">Mein Büchlein direkt hier im Browser. Wisch zur Seite oder tipp auf die Pfeile. Danach wartet ein kleines Tier-Quiz auf dich.</p>
+  </div>
+</div>
+
+<main>
+  <section class="teil innen" id="buch" aria-label="Das Büchlein zum Blättern">
+    <div class="teil-kopf auf"><span class="kapitel">Teil 1</span><h2>Das Buch</h2><span class="hand">26 Seiten vom Hof</span></div>
+    <div class="buehne">
+      <div id="flip">
+        <div class="blatt" data-density="hard"><img src="seiten/s01.webp" alt="Titelseite des Büchleins" width="1109" height="1571"></div>
+      <div class="blatt"><img src="seiten/s02.webp" alt="Seite 2 des Büchleins" width="1109" height="1571"></div>
+      <div class="blatt"><img src="seiten/s03.webp" alt="Seite 3 des Büchleins" width="1109" height="1571"></div>
+      <div class="blatt"><img src="seiten/s04.webp" alt="Seite 4 des Büchleins" width="1109" height="1571" loading="lazy"></div>
+      <div class="blatt"><img src="seiten/s05.webp" alt="Seite 5 des Büchleins" width="1109" height="1571" loading="lazy"></div>
+      <div class="blatt"><img src="seiten/s06.webp" alt="Seite 6 des Büchleins" width="1109" height="1571" loading="lazy"></div>
+      <div class="blatt"><img src="seiten/s07.webp" alt="Seite 7 des Büchleins" width="1109" height="1571" loading="lazy"></div>
+      <div class="blatt"><img src="seiten/s08.webp" alt="Seite 8 des Büchleins" width="1109" height="1571" loading="lazy"></div>
+      <div class="blatt"><img src="seiten/s09.webp" alt="Seite 9 des Büchleins" width="1109" height="1571" loading="lazy"></div>
+      <div class="blatt"><img src="seiten/s10.webp" alt="Seite 10 des Büchleins" width="1109" height="1571" loading="lazy"></div>
+      <div class="blatt"><img src="seiten/s11.webp" alt="Seite 11 des Büchleins" width="1109" height="1571" loading="lazy"></div>
+      <div class="blatt"><img src="seiten/s12.webp" alt="Seite 12 des Büchleins" width="1109" height="1571" loading="lazy"></div>
+      <div class="blatt"><img src="seiten/s13.webp" alt="Seite 13 des Büchleins" width="1109" height="1571" loading="lazy"></div>
+      <div class="blatt"><img src="seiten/s14.webp" alt="Seite 14 des Büchleins" width="1109" height="1571" loading="lazy"></div>
+      <div class="blatt"><img src="seiten/s15.webp" alt="Seite 15 des Büchleins" width="1109" height="1571" loading="lazy"></div>
+      <div class="blatt"><img src="seiten/s16.webp" alt="Seite 16 des Büchleins" width="1109" height="1571" loading="lazy"></div>
+      <div class="blatt"><img src="seiten/s17.webp" alt="Seite 17 des Büchleins" width="1109" height="1571" loading="lazy"></div>
+      <div class="blatt"><img src="seiten/s18.webp" alt="Seite 18 des Büchleins" width="1109" height="1571" loading="lazy"></div>
+      <div class="blatt"><img src="seiten/s19.webp" alt="Seite 19 des Büchleins" width="1109" height="1571" loading="lazy"></div>
+      <div class="blatt"><img src="seiten/s20.webp" alt="Seite 20 des Büchleins" width="1109" height="1571" loading="lazy"></div>
+      <div class="blatt"><img src="seiten/s21.webp" alt="Seite 21 des Büchleins" width="1109" height="1571" loading="lazy"></div>
+      <div class="blatt"><img src="seiten/s22.webp" alt="Seite 22 des Büchleins" width="1109" height="1571" loading="lazy"></div>
+      <div class="blatt"><img src="seiten/s23.webp" alt="Seite 23 des Büchleins" width="1109" height="1571" loading="lazy"></div>
+      <div class="blatt"><img src="seiten/s24.webp" alt="Seite 24 des Büchleins" width="1109" height="1571" loading="lazy"></div>
+      <div class="blatt"><img src="seiten/s25.webp" alt="Seite 25 des Büchleins" width="1109" height="1571" loading="lazy"></div>
+      <div class="blatt" data-density="hard"><img src="seiten/s26.webp" alt="Rückseite des Büchleins" width="1109" height="1571" loading="lazy"></div>
+      </div>
+      <div class="leiste">
+        <button type="button" class="rund" id="zurueck" aria-label="Seite zurück"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 6l-6 6 6 6"/></svg></button>
+        <span class="seitenzahl" id="seitenzahl" aria-live="polite">Titel</span>
+        <button type="button" class="rund" id="weiter" aria-label="Seite weiter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 6l6 6-6 6"/></svg></button>
+        <span class="trenn" aria-hidden="true"></span>
+        <span class="klein">
+          <button type="button" class="textknopf" id="lupe-auf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg>Vergrößern</button>
+          <button type="button" class="textknopf ton" id="ton" aria-pressed="true" aria-label="Blättergeräusch an oder aus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path id="ton-welle" d="M15.5 9a4.5 4.5 0 0 1 0 6M18 6.5a8 8 0 0 1 0 11"/></svg><span id="ton-text">Ton an</span></button>
+        </span>
+      </div>
+    </div>
+    <div class="danach">
+      <a class="textknopf" href="#quiz-start">Weiter zum Quiz</a>
+      <a class="textknopf" id="pdf" href="Tiere-tun-uns-gut.pdf" download>Büchlein als PDF speichern</a>
+      <p class="tipp" id="pdf-status" role="status" hidden></p>
+    </div>
+  </section>
+
+  <section class="teil quiz-teil" id="quiz-start">
+    <div class="schmal">
+      <div class="teil-kopf auf"><span class="kapitel">Teil 2</span><h2>Gefragt &amp; gefressen</h2><span class="hand">das kleine Tier-Quiz</span></div>
+      <p class="lead auf">Fragen, die rund ums Füttern immer wieder auftauchen. Tipp auf Ja oder Nein, lies meine Antwort und sammle deine Tiere.</p>
+      <p class="hinweis auf" style="margin-top:16px">Ich bin keine Tierärztin. Was hier steht, sind meine eigenen Erfahrungen aus einem Leben auf dem Hof mit Hunden, Katzen und Pferden – mit viel Liebe und ganz offen erzählt. Das ersetzt keinen Rat von Tierärztin oder Tierarzt. Wenn es deinem Tier nicht gut geht: bitte immer zuerst dorthin.</p>
+      <nav class="rubriken auf" id="nav" aria-label="Rubriken"></nav>
+
+      <div id="quiz"></div>
+
+      <section class="ergebnis" id="ergebnis" aria-live="polite">
+        <div class="kap">Zum Schluss</div>
+        <h2 id="erg-titel">Dein Sammelalbum</h2>
+        <div class="hand" id="erg-satz">Noch leer – die erste Frage wartet.</div>
+        <div class="album" id="album"></div>
+        <p class="cta">Lust auf mehr Tiergeschichten? <b>Jeden 1. Mittwoch im Monat, 17:17 Uhr, 30 Minuten online.</b> Anmeldung bis 17 Uhr am selben Tag per WhatsApp: <b>0171 6567794</b>.</p>
+        <button class="neu" id="neu" type="button">Noch mal von vorn</button>
+      </section>
+    </div>
+  </section>
+
+  <section class="teil innen" id="hof">
+    <div class="teil-kopf auf"><span class="kapitel">Teil 3</span><h2>Vom Hof</h2><span class="hand">so sieht es bei uns gerade aus</span></div>
+    <div class="hof">
+      <figure class="auf"><img src="fotos/diana-wiese.webp" alt="Diana mit Hut auf der Streuobstwiese" width="720" height="960" loading="lazy"><figcaption>Ich, auf unserer Streuobstwiese</figcaption></figure>
+      <figure class="auf"><img src="fotos/pferde.webp" alt="Drei Pferde grasen auf der Weide" width="720" height="960" loading="lazy"><figcaption>Mittagspause auf der Weide</figcaption></figure>
+      <figure class="auf"><img src="fotos/sam.webp" alt="Diana mit ihrem Vizsla Sam" width="720" height="960" loading="lazy"><figcaption>Sam holt sich seine Streicheleinheit</figcaption></figure>
+      <figure class="auf"><img src="fotos/katze-schwarz.webp" alt="Schwarze Katze schläft im Korbsessel" width="720" height="960" loading="lazy"><figcaption>Der Korbsessel ist besetzt</figcaption></figure>
+      <figure class="auf"><img src="fotos/katze-rot.webp" alt="Rote Katze döst in einem Karton" width="720" height="960" loading="lazy"><figcaption>Jeder Karton ist ein Bett</figcaption></figure>
+    </div>
+  </section>
+
+  <footer class="fuss">
+    <div class="schmal">
+      <p>Werbung: Diana Winter ist selbstständige Vertriebspartnerin der Reico &amp; Partner Vertriebs GmbH und erhält für Bestellungen eine Provision. Kein offizielles Angebot von Reico. Alle Produkte, Preise und Bestellungen findest du direkt bei Reico auf meiner Partnerseite (Werbelink): <a href="https://reico-vital.com/de/vp/timo.und.diana.winter" rel="noopener">reico-vital.com/de/vp/timo.und.diana.winter</a></p>
+      <p>Die Antworten hier sind persönliche Erfahrungen und allgemeines Wissen, keine tierärztliche Beratung.</p>
+      <p>Diana Winter · Jägerhof, Sonnenstraße 21, 76703 Kraichtal-Bahnbrücken · <a href="https://natur-erlebnis-auszeit.de/impressum/" rel="noopener">Impressum</a> · <a href="https://natur-erlebnis-auszeit.de/datenschutzerklaerung/" rel="noopener">Datenschutz</a></p>
+      <p>Datenschutz-Hinweis: Diese Seite wird über Netlify (Netlify Inc., USA) bereitgestellt. Beim Aufruf verarbeitet Netlify technisch notwendige Verbindungsdaten wie deine IP-Adresse. Diese Seite selbst setzt keine Cookies, nutzt kein Tracking und lädt nichts von fremden Servern nach.</p>
+    </div>
+  </footer>
+</main>
+
+<div class="lupe" id="lupe" hidden role="dialog" aria-modal="true" aria-label="Seite vergrößert">
+  <div class="lupe-kopf">
+    <span class="nr" id="lupe-nr"></span>
+    <button type="button" id="lz-minus" aria-label="Kleiner">−</button>
+    <button type="button" id="lz-plus" aria-label="Größer">+</button>
+    <button type="button" id="lz-vor" aria-label="Vorige Seite"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 6l-6 6 6 6"/></svg></button>
+    <button type="button" id="lz-nach" aria-label="Nächste Seite"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 6l6 6-6 6"/></svg></button>
+    <button type="button" id="lz-zu">Schließen</button>
+  </div>
+  <div class="lupe-flaeche" id="lupe-flaeche"><img id="lupe-bild" alt=""></div>
+</div>
+
+<script>document.documentElement.classList.add("js");</script>
+<script src="js/page-flip.browser.js"></script>
+<script>
+
+const RUBRIKEN = [
+  {id:"hund", name:"Hund", mehrzahl:"Hunde", icon:"pfote", sub:"Vom Frühstückstisch bis zum Knochen",
+   fragen:[
+    ["Darf mein Hund ein Stückchen Käse?", true, "Ein kleines Würfelchen als Belohnung vertragen die meisten Hunde gut, gerade harte, reife Sorten haben kaum noch Milchzucker. Die ganze Käseplatte dagegen verträgt eher dein Sofa nicht."],
+    ["Sind Weintrauben ein gesunder Snack für Hunde?", false, "Nein, Weintrauben und Rosinen gehören wie Schokolade, Zwiebeln, Knoblauch und Xylit (Birkenzucker) nicht in den Hund. Also genau das, was beim Kuchen-Nachmittag gern auf Hundehöhe steht."],
+    ["Darf mein Hund gekochte Knochen?", false, "Gekochte Knochen nie, sie splittern. Hund und Knochen haben außerdem selten dieselbe Vorstellung von „langsam“."],
+    ["Ist Grasfressen bei Hunden meistens normal?", true, "Ja, das machen sehr viele Hunde, manche mögen es einfach. Frisst er aber plötzlich auffällig viel oder würgt ständig, lohnt ein Blick von der Tierärztin."]
+   ]},
+  {id:"katze", name:"Katze", mehrzahl:"Katzen", icon:"katze", sub:"Die Speisekarte bestimmt ohnehin die Katze",
+   fragen:[
+    ["Braucht eine erwachsene Katze ihr Schälchen Milch?", false, "Die meisten erwachsenen Katzen vertragen Kuhmilch schlecht, weil sie den Milchzucker nicht mehr gut verdauen. Das Schälchen vor der Tür ist ein schönes Bild – aber eben nur ein Bild."],
+    ["Kann eine Katze vegetarisch leben?", false, "Nein. Katzen sind echte Fleischfresser und brauchen zum Beispiel Taurin, das ihr Körper nicht ausreichend selbst bildet. Den Salat darfst du also gern allein essen."],
+    ["Sind viele kleine Mahlzeiten für Katzen normal?", true, "Ja, eine Maus ist eben kein Drei-Gänge-Menü. Kleine Portionen über den Tag passen besser zu ihr als ein voller Napf am Morgen."],
+    ["Kann Nassfutter helfen, wenn meine Katze wenig trinkt?", true, "Ja. Katzen trinken von Natur aus wenig, ihre Vorfahren stammen aus trockenen Gegenden. Nassfutter, ein Trinkbrunnen oder Wasser weit weg vom Napf machen Lust aufs Trinken."]
+   ]},
+  {id:"pferd", name:"Pferd", mehrzahl:"Pferde", icon:"eisen", sub:"Dauerfresser mit großem Herz",
+   fragen:[
+    ["Braucht mein Pferd mindestens 1,5 kg Heu pro 100 kg Körpergewicht am Tag?", true, "Ja, das ist die Faustregel. Ein Pferd mit 600 kg bekommt also mindestens 9 kg – und findet trotzdem, dass es zu wenig ist."],
+    ["Ist Brot ein gutes Leckerli fürs Pferd?", false, "Ich rate eher ab: viel Stärke, kaum Nutzen, und schimmeliges Brot ist tabu. Eine Möhre macht dein Pferd mindestens genauso glücklich."],
+    ["Darf die Fresspause länger als vier Stunden sein?", false, "Möglichst nicht, Pferde sind Dauerfresser. Engmaschige Heunetze strecken das Heu über den Tag und machen aus Fressen ein Hobby."],
+    ["Darf mein Pferd im Frühjahr gleich den ganzen Tag auf die Weide?", false, "Lieber langsam: anfangs nur wenige Minuten, dann Stück für Stück länger. Frisches Gras ist für den Pferdebauch wie ein All-you-can-eat-Buffet nach der Fastenzeit."]
+   ]},
+  {id:"futter", name:"Futter", mehrzahl:"Näpfe", icon:"napf", sub:"Meine Erfahrung aus vielen Jahren Etikettenlesen",
+   fragen:[
+    ["Stellt man Futter besser nach und nach um?", true, "Bei unseren Tieren hat sich bewährt, über 7 bis 10 Tage neues und altes Futter zu mischen und den neuen Anteil täglich zu erhöhen. Der Bauch mag Überraschungen so wenig wie ich montags um sechs."],
+    ["Steht auf dem Etikett das, wovon am meisten drin ist, ganz vorne?", true, "Ja, die Zusammensetzung beginnt mit dem Bestandteil mit dem größten Anteil. Deshalb lese ich immer zuerst die ersten drei Zutaten – der Rest ist oft Kleingedrucktes mit Großwirkung auf die Laune."],
+    ["Ist die Fütterungsempfehlung auf der Packung eine feste Regel?", false, "Sie ist ein Startpunkt, keine Vorschrift. Ob die Menge passt, zeigt dir dein Tier: Rippen gut ertastbar, aber nicht sichtbar."],
+    ["Reicht ein „Ergänzungsfuttermittel“ allein als Hauptfutter?", false, "Nein, dafür steht auf dem Etikett „Alleinfuttermittel“. Ergänzungsfutter ist wie die Soße: lecker, aber kein ganzes Essen."]
+   ]},
+  {id:"haus", name:"Urlaub mit Tier", mehrzahl:"Häuser", icon:"haus", sub:"Gut vorbereitet in die Ferien mit Tier",
+   fragen:[
+    ["Soll ich das gewohnte Futter mit in den Urlaub nehmen?", true, "Ja, unbedingt. Neue Umgebung, neue Gerüche, neue Nachbarn – da freut sich der Bauch über etwas Vertrautes im Napf."],
+    ["Ist der Urlaub ein guter Zeitpunkt, das Futter umzustellen?", false, "Lieber nicht. Wenn schon alles neu ist, bleibt der Napf am besten beim Alten. Umstellen klappt zu Hause in Ruhe viel besser."],
+    ["Darf mein Hund mit in unsere Ferienwohnung am Jägerhof?", true, "Ja, Hunde sind bei uns willkommen. Die Ferienwohnung liegt separat auf dem Hof, drumherum wohnen unsere Pferde und Katzen – genug zu schnuppern, dass er abends zufriedener schläft als du."]
+   ]}
+];
+
+const zustand = {};
+const quiz = document.getElementById("quiz");
+const nav = document.getElementById("nav");
+
+function el(tag, cls, text){const e=document.createElement(tag); if(cls) e.className=cls; if(text!=null) e.textContent=text; return e;}
+// Dieselben Linien-Motive wie im Büchlein (Pfote, Katze, Hufeisen, Napf, Haus)
+const SVG={
+  pfote:'<ellipse cx="16" cy="21.5" rx="6.5" ry="5.5"/><ellipse cx="8" cy="13" rx="2.6" ry="3.4"/><ellipse cx="13" cy="8.5" rx="2.6" ry="3.4"/><ellipse cx="19" cy="8.5" rx="2.6" ry="3.4"/><ellipse cx="24" cy="13" rx="2.6" ry="3.4"/>',
+  katze:'<path d="M8 13 7 5l6 5h6l6-5-1 8"/><path d="M8 13c-1 8 3 14 8 14s9-6 8-14"/><circle cx="12.5" cy="17" r=".8"/><circle cx="19.5" cy="17" r=".8"/><path d="M15 21h2l-1 1z"/>',
+  eisen:'<path d="M9 27V15a7 7 0 0 1 14 0v12"/><path d="M5 27h7M20 27h7"/><circle cx="9.5" cy="19" r=".6"/><circle cx="10.5" cy="13.5" r=".6"/><circle cx="22.5" cy="19" r=".6"/><circle cx="21.5" cy="13.5" r=".6"/>',
+  napf:'<path d="M4 16h24l-3 9H7z"/><path d="M10 12c1-3 4-3 5 0M17 11c1-3 4-3 5 0"/>',
+  haus:'<path d="M4 15 16 5l12 10"/><path d="M7 13v14h18V13"/><path d="M13 27v-7h6v7"/>'
+};
+function icon(r, cls){
+  const s=document.createElementNS("http://www.w3.org/2000/svg","svg");
+  s.setAttribute("viewBox","0 0 32 32"); s.setAttribute("class","li "+(cls||"")); s.setAttribute("aria-hidden","true");
+  s.innerHTML=SVG[r.icon]; return s;
+}
+
+RUBRIKEN.forEach((r,ri)=>{
+  const a=el("a"); a.href="#"+r.id;
+  a.append(el("span","nr",String(ri+1).padStart(2,"0")), icon(r), el("span","name",r.name), el("span","zahl",r.fragen.length+" Fragen"));
+  nav.append(a);
+
+  const s=el("section","rubrik"); s.id=r.id;
+  const k=el("div","rubrik-kopf");
+  k.append(el("div","kap","Rubrik "+(ri+1)+" von "+RUBRIKEN.length), el("h2",null,r.name), el("p",null,r.sub), icon(r));
+  s.append(k);
+
+  r.fragen.forEach(([frage, loesung, text], n)=>{
+    const key=r.id+"-"+n;
+    const f=el("article","frage"); f.id="f-"+key;
+    const h=el("h3"); h.append(el("span","fnr",String(n+1)), el("span",null,frage)); f.append(h);
+    const kn=el("div","knoepfe");
+    const ja=el("button",null,"Ja"); ja.type="button"; ja.id="ja-"+key;
+    const nein=el("button",null,"Nein"); nein.type="button"; nein.id="nein-"+key;
+    kn.append(ja,nein); f.append(kn);
+    const an=el("div","antwort"); an.hidden=true;
+    const u=el("div","urteil"); an.append(u, el("p",null,text)); f.append(an);
+    function waehle(wert){
+      if(key in zustand) return;
+      const richtig = wert===loesung; zustand[key]=richtig;
+      const btn = wert?ja:nein;
+      btn.classList.add("gewaehlt", richtig?"richtig":"falsch");
+      (loesung?ja:nein).classList.add("loesung");
+      ja.disabled=nein.disabled=true;
+      u.className="urteil "+(richtig?"richtig":"falsch");
+      u.textContent = richtig ? "Richtig." : "Nicht ganz – richtig ist „"+(loesung?"Ja":"Nein")+"“.";
+      an.hidden=false; album();
+    }
+    ja.addEventListener("click",()=>waehle(true));
+    nein.addEventListener("click",()=>waehle(false));
+    s.append(f);
+  });
+  quiz.append(s);
+});
+
+function album(){
+  const box=document.getElementById("album"); box.textContent="";
+  let beantwortet=0, richtigGesamt=0, gesamt=0;
+  RUBRIKEN.forEach(r=>{
+    let richtig=0;
+    r.fragen.forEach((_,n)=>{const k=r.id+"-"+n; if(k in zustand){beantwortet++; if(zustand[k]) richtig++;}});
+    richtigGesamt+=richtig; gesamt+=r.fragen.length;
+    const z=el("div","zeile"); z.append(el("span","name",r.name));
+    const reihe=el("span","reihe");
+    r.fragen.forEach((_,n)=>reihe.append(icon(r, n<richtig?"an":"")));
+    z.append(reihe, el("span","stand",richtig+" von "+r.fragen.length));
+    box.append(z);
+  });
+  const satz=document.getElementById("erg-satz"), titel=document.getElementById("erg-titel");
+  if(beantwortet===0){ satz.textContent="Noch leer – die erste Frage wartet."; titel.textContent="Dein Sammelalbum"; }
+  else if(beantwortet<gesamt){ const rest=gesamt-beantwortet; satz.textContent=richtigGesamt+(richtigGesamt===1?" Tier":" Tiere")+" gesammelt, "+rest+(rest===1?" Frage wartet noch.":" Fragen warten noch."); titel.textContent="Dein Sammelalbum"; }
+  else if(richtigGesamt===gesamt){ titel.textContent="Alles richtig."; satz.textContent="Dein Tier hat Glück mit dir."; }
+  else if(richtigGesamt>=gesamt*0.75){ titel.textContent=richtigGesamt+" von "+gesamt+" richtig"; satz.textContent="Da kennt sich jemand aus."; }
+  else { titel.textContent=richtigGesamt+" von "+gesamt+" richtig"; satz.textContent="Jetzt weißt du mehr als vorhin – das zählt."; }
+}
+document.getElementById("neu").addEventListener("click",()=>{
+  for(const k in zustand) delete zustand[k];
+  document.querySelectorAll(".frage").forEach(f=>{
+    f.querySelectorAll("button").forEach(b=>{b.disabled=false;b.className="";});
+    f.querySelector(".antwort").hidden=true;
+  });
+  album(); document.getElementById("hund").scrollIntoView({behavior:"smooth"});
+});
+album();
+
+// Für Google und KI: alle Fragen und Antworten als FAQPage
+const ld={"@context":"https://schema.org","@type":"FAQPage","mainEntity":RUBRIKEN.flatMap(r=>r.fragen.map(([q,,a])=>({"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}})))};
+const sc=document.createElement("script"); sc.type="application/ld+json"; sc.textContent=JSON.stringify(ld); document.head.append(sc);
+
+</script>
+<script>
+const ANZAHL = 26;
+const bild = n => "seiten/s"+String(n+1).padStart(2,"0")+".webp";
+
+// Ruhiges Einblenden: Rubrik-Köpfe und Fragen tauchen beim Scrollen sanft auf
+document.querySelectorAll(".rubrik-kopf,.frage,.ergebnis").forEach(e=>e.classList.add("auf"));
+if("IntersectionObserver" in window){
+  const io=new IntersectionObserver(es=>es.forEach(x=>{ if(x.isIntersecting){ x.target.classList.add("da"); io.unobserve(x.target); } }),{rootMargin:"0px 0px -8% 0px"});
+  document.querySelectorAll(".auf").forEach(e=>io.observe(e));
+} else document.querySelectorAll(".auf").forEach(e=>e.classList.add("da"));
+
+// Leises Papiergeräusch: gefiltertes Rauschen, erst nach der ersten Berührung erlaubt
+let ctx = null, tonAn = true;
+function weckeTon(){ try{ ctx = ctx || new (window.AudioContext||window.webkitAudioContext)(); if(ctx.state==="suspended") ctx.resume(); }catch(e){} }
+document.addEventListener("pointerdown", weckeTon, {passive:true});
+document.addEventListener("keydown", weckeTon);
+function raschel(){
+  if(!tonAn || !ctx || ctx.state!=="running") return;
+  const d=.42, n=Math.floor(ctx.sampleRate*d), buf=ctx.createBuffer(1,n,ctx.sampleRate), c=buf.getChannelData(0);
+  for(let i=0;i<n;i++){ const t=i/n; c[i]=(Math.random()*2-1)*Math.pow(1-t,1.6)*(.55+.45*Math.abs(Math.sin(t*22))); }
+  const q=ctx.createBufferSource(); q.buffer=buf;
+  const f=ctx.createBiquadFilter(); f.type="bandpass"; f.frequency.value=2600; f.Q.value=.6;
+  const h=ctx.createBiquadFilter(); h.type="highpass"; h.frequency.value=700;
+  const g=ctx.createGain(), t0=ctx.currentTime;
+  g.gain.setValueAtTime(0,t0); g.gain.linearRampToValueAtTime(.07,t0+.06); g.gain.exponentialRampToValueAtTime(.0008,t0+d);
+  q.connect(f).connect(h).connect(g).connect(ctx.destination); q.start();
+}
+const tonKnopf=document.getElementById("ton");
+tonKnopf.addEventListener("click",()=>{
+  tonAn=!tonAn; tonKnopf.setAttribute("aria-pressed",tonAn);
+  document.getElementById("ton-text").textContent = tonAn?"Ton an":"Ton aus";
+  document.getElementById("ton-welle").style.display = tonAn?"":"none";
+});
+
+// Das Buch: nutzt die ganze Breite, begrenzt nur durch die Bildschirmhöhe
+const flip = new St.PageFlip(document.getElementById("flip"), {
+  width:420, height:595, size:"stretch", minWidth:260, maxWidth:580, minHeight:368, maxHeight:822,
+  showCover:true, usePortrait:true, maxShadowOpacity:.3, mobileScrollSupport:true, flippingTime:750
+});
+flip.loadFromHTML(document.querySelectorAll("#flip .blatt"));
+const zahl=document.getElementById("seitenzahl"), zur=document.getElementById("zurueck"), wei=document.getElementById("weiter");
+function stand(){
+  const i=flip.getCurrentPageIndex(), hoch=flip.getOrientation()==="portrait";
+  let txt;
+  if(i===0) txt="Titel";
+  else if(i>=ANZAHL-1) txt="Rückseite";
+  else if(hoch) txt="Seite "+(i+1)+" von "+ANZAHL;
+  else txt="Seiten "+(i+1)+"–"+(i+2)+" von "+ANZAHL;
+  const f=document.getElementById("flip"); f.classList.toggle("vorn",!hoch&&i===0); f.classList.toggle("hinten",!hoch&&i>=ANZAHL-1);
+  zahl.textContent=txt; zur.disabled=i===0; wei.disabled=i>=ANZAHL-1;
+}
+flip.on("flip",()=>{ raschel(); stand(); });
+flip.on("changeOrientation",stand);
+flip.on("changeState",e=>{ if(e.data==="flipping"||e.data==="user_fold") document.getElementById("flip").classList.remove("vorn","hinten"); });
+zur.addEventListener("click",()=>flip.flipPrev());
+wei.addEventListener("click",()=>flip.flipNext());
+stand();
+
+// Lupe
+const lupe=document.getElementById("lupe"), lb=document.getElementById("lupe-bild"), fl=document.getElementById("lupe-flaeche");
+let lupeSeite=0, stufe=1; const STUFEN=[1,1.6,2.4];
+function zeigeLupe(){
+  lb.src=bild(lupeSeite); lb.alt="Seite "+(lupeSeite+1)+" vergrößert";
+  document.getElementById("lupe-nr").textContent="Seite "+(lupeSeite+1)+" / "+ANZAHL;
+  const basis=Math.min(fl.clientWidth-32, (fl.clientHeight-16)*420/595, 900);
+  lb.style.width=Math.round(basis*STUFEN[stufe-1])+"px";
+}
+function oeffneLupe(seite){ lupeSeite = seite ?? flip.getCurrentPageIndex(); stufe=1; lupe.hidden=false; zeigeLupe(); document.getElementById("lz-zu").focus(); }
+function schliesseLupe(){ lupe.hidden=true; if(flip.getCurrentPageIndex()!==lupeSeite) flip.turnToPage(lupeSeite), stand(); document.getElementById("lupe-auf").focus(); }
+document.getElementById("lupe-auf").addEventListener("click",()=>oeffneLupe());
+document.getElementById("flip").addEventListener("dblclick",()=>oeffneLupe());
+document.getElementById("lz-zu").addEventListener("click",schliesseLupe);
+document.getElementById("lz-plus").addEventListener("click",()=>{ stufe=Math.min(STUFEN.length,stufe+1); zeigeLupe(); });
+document.getElementById("lz-minus").addEventListener("click",()=>{ stufe=Math.max(1,stufe-1); zeigeLupe(); });
+document.getElementById("lz-vor").addEventListener("click",()=>{ if(lupeSeite>0){lupeSeite--; raschel(); zeigeLupe(); fl.scrollTo(0,0);} });
+document.getElementById("lz-nach").addEventListener("click",()=>{ if(lupeSeite<ANZAHL-1){lupeSeite++; raschel(); zeigeLupe(); fl.scrollTo(0,0);} });
+lb.addEventListener("dblclick",()=>{ stufe = stufe===1 ? 2 : 1; zeigeLupe(); });
+window.addEventListener("resize",()=>{ if(!lupe.hidden) zeigeLupe(); });
+document.addEventListener("keydown",e=>{
+  if(!lupe.hidden){
+    if(e.key==="Escape") schliesseLupe();
+    else if(e.key==="ArrowLeft") document.getElementById("lz-vor").click();
+    else if(e.key==="ArrowRight") document.getElementById("lz-nach").click();
+    return;
+  }
+  if(e.target.closest("input,textarea,button")) return;
+  if(e.key==="ArrowLeft") flip.flipPrev(); else if(e.key==="ArrowRight") flip.flipNext();
+});
+
+</script>
+
+</html>
