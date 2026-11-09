@@ -347,7 +347,7 @@ body{padding:var(--rahmen)}
 
 <main>
   <section class="teil innen" id="buch" aria-label="Das Büchlein zum Blättern">
-    <div class="teil-kopf auf"><span class="kapitel">Teil 1</span><h2>Das Buch</h2><span class="hand">27 Seiten vom Hof</span></div>
+    <div class="teil-kopf auf"><span class="kapitel">Teil 1</span><h2>Das Buch</h2><span class="hand">32 Seiten vom Hof</span></div>
     <div class="buehne">
       <div id="flip">
         <div class="blatt" data-density="hard"><img src="seiten/s01.webp" alt="Titelseite des Büchleins" width="1109" height="1571"></div>
@@ -376,7 +376,12 @@ body{padding:var(--rahmen)}
       <div class="blatt"><img src="seiten/s24.webp" alt="Seite 24 des Büchleins" width="1109" height="1571" loading="lazy"></div>
       <div class="blatt"><img src="seiten/s25.webp" alt="Seite 25 des Büchleins" width="1109" height="1571" loading="lazy"></div>
       <div class="blatt"><img src="seiten/s26.webp" alt="Seite 26 des Büchleins" width="1109" height="1571" loading="lazy"></div>
-      <div class="blatt" data-density="hard"><img src="seiten/s27.webp" alt="Rückseite des Büchleins" width="1109" height="1571" loading="lazy"></div>
+      <div class="blatt"><img src="seiten/s27.webp" alt="Seite 27 des Büchleins" width="1109" height="1571" loading="lazy"></div>
+      <div class="blatt"><img src="seiten/s28.webp" alt="Seite 28 des Büchleins" width="1109" height="1571" loading="lazy"></div>
+      <div class="blatt"><img src="seiten/s29.webp" alt="Seite 29 des Büchleins" width="1109" height="1571" loading="lazy"></div>
+      <div class="blatt"><img src="seiten/s30.webp" alt="Seite 30 des Büchleins" width="1109" height="1571" loading="lazy"></div>
+      <div class="blatt"><img src="seiten/s31.webp" alt="Seite 31 des Büchleins" width="1109" height="1571" loading="lazy"></div>
+      <div class="blatt" data-density="hard"><img src="seiten/s32.webp" alt="Rückseite des Büchleins" width="1109" height="1571" loading="lazy"></div>
       </div>
       <div class="leiste">
         <button type="button" class="rund" id="zurueck" aria-label="Seite zurück"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 6l-6 6 6 6"/></svg></button>
@@ -671,7 +676,7 @@ const sc=document.createElement("script"); sc.type="application/ld+json"; sc.tex
 
 </script>
 <script>
-const ANZAHL = 27;
+const ANZAHL = 32;
 const bild = n => "seiten/s"+String(n+1).padStart(2,"0")+".webp";
 
 // Ruhiges Einblenden: Rubrik-Köpfe und Fragen tauchen beim Scrollen sanft auf
